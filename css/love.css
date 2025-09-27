@@ -1,0 +1,180 @@
+/* Import font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fdfdff;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.center-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ---------------------- Mobile Layout (Default) ------------------------- */
+
+/* Hati dikecilkan lagi agar ada ruang */
+.love {
+    position: relative;
+    width: 520px;
+    height: 440px;
+    transform: scale(0.6); /* Lebih kecil */
+    margin-top: -80px;
+    margin-bottom: -120px; /* Tarik elemen di bawahnya agar lebih dekat */
+}
+
+/* Area bawah (GIF + Pesan) dijadikan Flexbox */
+.bottom-area {
+    display: flex;
+    align-items: center; /* Sejajarkan GIF dan teks secara vertikal */
+    justify-content: center;
+    gap: 10px; /* Jarak antara GIF dan teks */
+}
+
+.body_left {
+    width: 80px; /* Ukuran GIF dikecilkan */
+    height: 80px;
+    flex-shrink: 0; /* Mencegah GIF gepeng */
+}
+.body_left img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#love-message {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2em; /* Font dikecilkan agar muat */
+    font-weight: 700;
+    color: #c40908;
+    text-shadow: 0 0 5px #c40908, 0 0 10px #ff4d4d;
+    opacity: 0;
+    transition: opacity 1.5s ease-in;
+    text-align: center;
+}
+
+/* ---------------------- Animasi Naik ------------------------- */
+.love.is-rising {
+    animation: rise-up-mobile 2s ease-out forwards;
+}
+
+@keyframes rise-up-mobile {
+    to { transform: translateY(-30px) scale(0.6); }
+}
+
+
+/* ---------------------- DESKTOP LAYOUT (min-width: 992px) ------------------------- */
+@media (min-width: 992px) {
+    .main-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+    }
+
+    /* Di desktop, kembalikan GIF ke kiri dan center-area ke kanan */
+    .body_left {
+        order: 1; /* GIF di kiri */
+        width: 300px;
+        height: 300px;
+        position: static; /* Hapus positioning aneh dari versi sebelumnya */
+    }
+
+    .center-area {
+        order: 2; /* Hati & Pesan di kanan */
+    }
+    
+    /* Di desktop, kita tidak butuh .bottom-area lagi */
+    .bottom-area {
+        display: contents; /* Elemen ini seolah-olah tidak ada di desktop */
+    }
+
+    /* Kembalikan ukuran elemen ke semula */
+    .love {
+        transform: scale(1);
+        margin: 0;
+    }
+    
+    .love.is-rising {
+        animation-name: rise-up-desktop;
+    }
+
+    @keyframes rise-up-desktop {
+        to { transform: translateY(-60px) scale(1); }
+    }
+
+    #love-message {
+        font-size: 4.5em;
+        margin-top: 20px;
+    }
+}
+
+
+/* -- Sisa kode (Block, Pesan, Footer) -- */
+#message-container {
+    height: auto;
+}
+
+#love-message.show {
+    opacity: 1;
+}
+
+.love .block {
+    position: absolute;
+    visibility: hidden;
+}
+
+.love .block div {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background: url("../images/heart.png") no-repeat;
+    background-size: contain;
+}
+
+@keyframes border-anim {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.footer {
+    width: 100%;
+    padding: 20px 0;
+    position: relative;
+    z-index: 100;
+}
+.footer .border .border-top {
+    border-top: 3px solid black;
+    animation: border-anim 12s linear forwards;
+}
+.footer .border .border-bottom {
+    float: right;
+    border-top: 3px solid red;
+    animation: border-anim 7s linear 12s forwards;
+}
